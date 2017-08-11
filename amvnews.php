@@ -11,8 +11,6 @@ header('Content-type: text/html; charset=utf-8');
 
 require ('phpQuery/phpQuery.php');
 
-$url = 'http://amvnews.ru/';
-
 
 function curl_file_get_contents($url){
     $curl = curl_init();
@@ -78,6 +76,17 @@ function curl_file_get_contents_page($page){
     echo $title;
     echo '<br/>';
 
+    $author = $html->find('div#author-block > span > a > span[itemprop=name]')->text();
+    echo 'Author: ';
+    echo $author;
+    echo '<br/>';
+
+    $date = $html->find('div#author-block > span:eq(3)')->text();
+    echo 'Create: ';
+    echo $date;
+    echo '<br/>';
+
+
     $img = $html->find('img[itemprop=image]')->attr('src');
     $img = $amvnews.$img;
 
@@ -88,6 +97,12 @@ function curl_file_get_contents_page($page){
     file_put_contents("tmp/".$image_name.".jpg", $file);
 
     echo $img;
+    echo '<br/>';
+
+    $download = $html->find('div#main-link-block > span > a')->attr('href');
+    $download = $amvnews.$download;
+
+    echo '<a href="'.$download.'">Скачать<a>';
     echo '<br/>';
 
     $desc = $html->find('div[itemprop=description] > p:first')->text();
@@ -102,5 +117,13 @@ function curl_file_get_contents_page($page){
 
 }
 
-echo curl_file_get_contents($url);
+//$url = 'http://amvnews.ru/';
+$i = 0;
+while ($i < 20){
+
+    $url = 'http://amvnews.ru/index.php?go=News&page='.$i;
+    curl_file_get_contents($url);
+    $i= $i + 10;
+}
+
 ?>
