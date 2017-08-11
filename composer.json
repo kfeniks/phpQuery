@@ -1,0 +1,20 @@
+{
+    "name": "alex/lesson",
+    "description": "try curl php",
+    "authors": [
+        {
+            "name": "Alex Dubinin",
+            "email": "prinz.haruhi@gmail.com"
+        }
+    ],
+    "minimum-stability": "dev",
+    "require": {},
+    "autoload": {
+        "psr-4": {
+            "App\\": "App/"
+        },
+        "files": [
+            "helpers.php"
+        ]
+    }
+}
